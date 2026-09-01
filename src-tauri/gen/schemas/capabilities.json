@@ -1,1 +1,1 @@
-{"default":{"identifier":"default","description":"Rhythm desktop capabilities","local":true,"windows":["main"],"permissions":["core:default","sql:default","sql:allow-execute"]}}
+{"default":{"identifier":"default","description":"Rhythm desktop capabilities","local":true,"windows":["main"],"permissions":["core:default","sql:default","sql:allow-execute",{"identifier":"opener:allow-open-url","allow":[{"url":"https://github.com/ClaireLydiaWalton/day-planner-app"}]}]}}

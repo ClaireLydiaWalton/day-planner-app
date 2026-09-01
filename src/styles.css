@@ -1212,6 +1212,29 @@ body[data-theme="velvet"] .schedule-block[data-template-id="sleep"] {
   letter-spacing: .04em;
 }
 .meditation-actions button:hover { border-color: var(--cyan); color: var(--sidebar-ink); }
+.app-credit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 14px 3px 2px;
+  border-top: 1px solid color-mix(in srgb, var(--sidebar-ink) 14%, transparent);
+  color: color-mix(in srgb, var(--sidebar-ink) 42%, transparent);
+  font: 750 8px var(--mono);
+  letter-spacing: .09em;
+}
+.app-credit a {
+  color: color-mix(in srgb, var(--sidebar-ink) 58%, var(--cyan));
+  text-decoration: none;
+  transition: color .18s ease, text-shadow .18s ease;
+}
+.app-credit a:hover,
+.app-credit a:focus-visible {
+  color: var(--cyan);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--cyan) 48%, transparent);
+  outline: none;
+}
 body[data-theme="hacker"] .meditation-surface { border-radius: 2px; background: radial-gradient(circle at 50% 48%, rgba(70,184,186,.09), transparent 48%), linear-gradient(145deg, #071019, #03060b 72%); }
 body[data-theme="earth"] .meditation-surface { border-color: rgba(145,104,61,.52); border-radius: 13px 5px 15px 6px; background: radial-gradient(circle at 50% 48%, rgba(104,128,70,.13), transparent 52%), repeating-linear-gradient(12deg, rgba(219,184,123,.02) 0 1px, transparent 1px 5px), linear-gradient(145deg, #251c13, #11150e 76%); }
 body[data-theme="ocean"] .meditation-surface { border-color: rgba(128,226,224,.42); border-radius: 21px; background: radial-gradient(circle at 50% 48%, rgba(124,224,218,.14), transparent 52%), repeating-radial-gradient(ellipse at 50% -10%, transparent 0 28px, rgba(126,220,222,.035) 29px, transparent 31px 58px), linear-gradient(155deg, #074654, #06192d 75%); }

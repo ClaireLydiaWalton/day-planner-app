@@ -60,7 +60,22 @@ await page.waitForTimeout(500);
 const desktopAvailable = await page.evaluate(() => window.weekRhythmDesktop?.available === true);
 assert(desktopAvailable, "The native SQLite bridge is not active.");
 
-if (MODE === "inspect") {
+if (MODE === "credits") {
+  const credit = page.locator(".app-credit");
+  const githubLink = page.locator("#github-link");
+  assert(await credit.isVisible(), "The app credit is not visible in the sidebar.");
+  assert((await credit.textContent()).includes("© Claire Walton"), "The copyright credit is missing.");
+  assert(
+    await githubLink.getAttribute("href") === "https://github.com/ClaireLydiaWalton/day-planner-app",
+    "The GitHub link does not point to the Rhythm repository.",
+  );
+  console.log(JSON.stringify({
+    copyright: "© Claire Walton",
+    github: await githubLink.getAttribute("href"),
+    visible: true,
+  }, null, 2));
+  await browser.close();
+} else if (MODE === "inspect") {
   const state = await page.evaluate(() => window.weekRhythmDesktop.load());
   console.log(JSON.stringify({
     nativeBridge: true,
