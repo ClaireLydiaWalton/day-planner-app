@@ -145,6 +145,10 @@ scripts/desktop-smoke.mjs  Native regression harness
 src-tauri/                 Tauri configuration, Rust shell, icons, and bundles
 ```
 
+## Acknowledgments
+
+Rhythm was conceived, directed, and iteratively designed by Claire Walton, with design exploration and software development completed in collaboration with OpenAI Codex.
+
 ## Copyright
 
 © Claire Walton. All rights reserved.
