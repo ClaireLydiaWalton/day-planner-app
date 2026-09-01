@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#060916" />
+    <title>Week Rhythm</title>
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body data-theme="hacker">
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Daylight planner home">
+        <span class="brand-terminal">D_</span>
+        <span>DAYLIGHT<em>_OS</em></span>
+      </a>
+
+      <div class="week-nav" aria-label="Week navigation">
+        <button class="nav-key" id="previous-week" aria-label="Previous week">←</button>
+        <button class="week-readout" id="date-label">
+          <strong>Aug 30 — Sep 5, 2026</strong>
+        </button>
+        <button class="nav-key" id="next-week" aria-label="Next week">→</button>
+        <button class="today-button" id="today-button">TODAY</button>
+      </div>
+
+      <div class="system-actions">
+        <button class="reset-button" id="reset-plan">RESET</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <aside class="palette" aria-label="Activity library">
+        <div class="palette-sticky">
+          <div class="theme-switcher" aria-label="Choose theme">
+            <button class="theme-button active" data-theme-choice="hacker"><i></i><span>Hacker</span></button>
+            <button class="theme-button" data-theme-choice="earth"><i></i><span>Earth</span></button>
+            <button class="theme-button" data-theme-choice="ocean"><i></i><span>Ocean</span></button>
+            <button class="theme-button" data-theme-choice="dream"><i></i><span>Dream</span></button>
+            <button class="theme-button" data-theme-choice="velvet"><i></i><span>Velvet</span></button>
+          </div>
+          <div class="utility-panel" aria-label="Planner tools">
+            <div class="utility-row">
+              <button id="undo-action" disabled>UNDO</button>
+              <button id="redo-action" disabled>REDO</button>
+              <button id="lock-layout" aria-pressed="false">LOCK</button>
+            </div>
+            <div class="utility-row">
+              <button id="export-plan">BACKUP</button>
+              <button id="import-plan">RESTORE</button>
+              <button id="clear-week">CLEAR WEEK</button>
+            </div>
+          </div>
+          <div class="palette-heading">
+            <span>ACTIVITIES</span>
+            <button class="add-button" id="open-create" aria-label="Create an activity">+</button>
+          </div>
+          <div class="removal-zone" id="removal-zone"><strong>DROP TO REMOVE</strong><span>Removes this scheduled activity</span></div>
+          <div class="activity-grid" id="activity-grid"></div>
+          <section class="meditation-card" id="meditation-card" aria-live="polite">
+            <div class="meditation-readout">
+              <span>DRAW <strong id="meditation-number">01</strong></span>
+              <em id="meditation-name">PENDULUM SAND</em>
+            </div>
+            <div class="meditation-surface">
+              <canvas id="meditation-canvas" aria-label="Slowly rendering meditative drawing"></canvas>
+              <div class="meditation-grain" aria-hidden="true"></div>
+            </div>
+            <div class="meditation-actions">
+              <button type="button" id="change-meditation">CHANGE</button>
+              <button type="button" id="restart-meditation">RESTART</button>
+              <button type="button" id="show-tao">TAO</button>
+            </div>
+          </section>
+          <section class="chapter-card" id="chapter-card" aria-live="polite" hidden>
+            <div class="chapter-nav">
+              <button type="button" id="previous-chapter" aria-label="Previous chapter">←</button>
+              <span>CHAPTER <strong id="chapter-number">01</strong></span>
+              <button type="button" id="next-chapter" aria-label="Next chapter">→</button>
+            </div>
+            <article class="chapter-paper" id="chapter-paper" aria-label="Daily Tao Te Ching chapter">
+              <div class="chapter-art" aria-hidden="true"></div>
+              <div class="chapter-copy" id="chapter-copy"></div>
+              <footer id="chapter-credit">JAMES LEGGE · 1891</footer>
+            </article>
+            <div class="chapter-actions">
+              <button type="button" id="random-chapter">RANDOM</button>
+              <button type="button" id="show-meditation">VISUAL</button>
+            </div>
+          </section>
+        </div>
+      </aside>
+
+      <section class="workspace">
+        <canvas class="ambient-ocean" id="ocean-canvas" aria-hidden="true"></canvas>
+        <div class="workspace-heading">
+          <div>
+            <h1>WEEK RHYTHM</h1>
+          </div>
+          <div class="week-metrics">
+            <div><small>ACTIVITIES</small><strong id="total-blocks">00</strong></div>
+            <div><small>PLANNED</small><strong id="total-hours">00H</strong></div>
+            <div><small>OPEN</small><strong id="open-hours">126H</strong></div>
+          </div>
+        </div>
+
+        <section class="week-canvas" aria-label="Weekly planner from 6 AM through 6 AM the following morning">
+          <div class="time-header">
+            <div class="hours-title"><span>HOURS</span><i>→</i></div>
+            <div class="time-ruler" id="time-ruler"></div>
+          </div>
+          <div class="day-lanes" id="day-lanes"></div>
+        </section>
+
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="activity-modal" hidden>
+      <form class="activity-modal" id="activity-form">
+        <div class="modal-titlebar"><span id="modal-kicker">NEW ACTIVITY</span><button type="button" id="close-create" aria-label="Close">×</button></div>
+        <div class="modal-body">
+          <h2 id="modal-heading">CREATE ACTIVITY</h2>
+          <label>
+            <span>ACTIVITY_NAME</span>
+            <input id="activity-name" maxlength="24" placeholder="DEEP RESEARCH" required autocomplete="off" />
+          </label>
+          <fieldset>
+            <legend>COLOR_SIGNAL</legend>
+            <div class="color-options" id="color-options"></div>
+          </fieldset>
+          <label>
+            <span>DEFAULT_DURATION</span>
+            <select id="activity-duration">
+              <option value="15">00:15</option>
+              <option value="30">00:30</option>
+              <option value="45">00:45</option>
+              <option value="60" selected>01:00</option>
+              <option value="90">01:30</option>
+              <option value="120">02:00</option>
+              <option value="180">03:00</option>
+            </select>
+          </label>
+          <div class="modal-actions">
+            <button class="delete-activity" id="delete-activity" type="button" hidden>REMOVE ACTIVITY</button>
+            <button class="create-submit" id="activity-submit" type="submit">ADD TO DECK</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="day-menu" id="day-menu" hidden>
+      <strong id="day-menu-title">MONDAY</strong>
+      <div>
+        <button id="copy-day">COPY</button>
+        <button id="paste-day">PASTE</button>
+        <button id="clear-day">CLEAR</button>
+      </div>
+    </div>
+
+    <input id="import-file" type="file" accept="application/json,.json" hidden />
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

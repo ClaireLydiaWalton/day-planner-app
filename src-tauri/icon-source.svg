@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="112" y1="80" x2="924" y2="944" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#11142C"/>
+      <stop offset="0.56" stop-color="#080A18"/>
+      <stop offset="1" stop-color="#03040B"/>
+    </linearGradient>
+    <linearGradient id="lotus" x1="250" y1="334" x2="786" y2="708" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D9FFB0"/>
+      <stop offset="0.36" stop-color="#55E8CF"/>
+      <stop offset="0.7" stop-color="#92A4FF"/>
+      <stop offset="1" stop-color="#F59AC4"/>
+    </linearGradient>
+    <linearGradient id="water" x1="184" y1="686" x2="840" y2="812" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#47DCCA"/>
+      <stop offset="0.5" stop-color="#5AB8ED"/>
+      <stop offset="1" stop-color="#A683F2"/>
+    </linearGradient>
+    <radialGradient id="orb" cx="0" cy="0" r="1" gradientTransform="translate(764 244) rotate(90) scale(160)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D7FF72"/>
+      <stop offset="0.34" stop-color="#52F4D0" stop-opacity="0.92"/>
+      <stop offset="1" stop-color="#52F4D0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+  </defs>
+  <rect x="34" y="34" width="956" height="956" rx="218" fill="url(#bg)"/>
+  <rect x="51" y="51" width="922" height="922" rx="201" fill="none" stroke="#7B81C8" stroke-opacity="0.28" stroke-width="6"/>
+  <circle cx="752" cy="252" r="150" fill="url(#orb)" opacity="0.28" filter="url(#soft)"/>
+  <g fill="url(#lotus)" stroke="#E8FFF7" stroke-opacity="0.38" stroke-width="7" stroke-linejoin="round" filter="url(#glow)">
+    <path d="M512 620C438 557 415 455 512 337C609 455 586 557 512 620Z"/>
+    <path d="M491 635C398 619 323 554 328 417C454 461 512 541 491 635Z"/>
+    <path d="M533 635C626 619 701 554 696 417C570 461 512 541 533 635Z"/>
+    <path d="M464 657C361 672 270 629 229 506C368 512 464 564 464 657Z"/>
+    <path d="M560 657C663 672 754 629 795 506C656 512 560 564 560 657Z"/>
+  </g>
+  <circle cx="512" cy="602" r="19" fill="#E6FFBD" opacity="0.9" filter="url(#glow)"/>
+  <g fill="none" stroke="url(#water)" stroke-linecap="round" filter="url(#glow)">
+    <path d="M176 718C264 670 352 670 440 718C528 766 616 766 704 718C755 690 805 684 848 697" stroke-width="28"/>
+    <path d="M205 782C285 745 365 745 445 782C525 819 605 819 685 782C742 756 794 753 831 765" stroke-width="17" opacity="0.72"/>
+    <path d="M258 838C321 815 384 815 447 838C510 861 573 861 636 838C684 820 729 819 766 829" stroke-width="11" opacity="0.42"/>
+  </g>
+</svg>

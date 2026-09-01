@@ -1,0 +1,23 @@
+{
+  "name": "day-planner-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test:desktop": "node scripts/desktop-smoke.mjs",
+    "preview": "vite preview",
+    "tauri": "tauri"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0.0",
+    "@tauri-apps/plugin-sql": "^2.0.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0",
+    "playwright-core": "^1.62.1",
+    "typescript": "^5.7.2",
+    "vite": "^7.0.0"
+  }
+}
