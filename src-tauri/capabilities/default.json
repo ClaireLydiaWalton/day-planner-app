@@ -1,7 +1,7 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Week Rhythm desktop capabilities",
+  "description": "Rhythm desktop capabilities",
   "windows": ["main"],
   "permissions": [
     "core:default",

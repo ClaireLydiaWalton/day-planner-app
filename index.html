@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#060916" />
-    <title>Week Rhythm</title>
+    <title>Rhythm</title>
     <script type="module" src="/src/main.ts"></script>
   </head>
   <body data-theme="hacker">
@@ -54,7 +54,10 @@
           </div>
           <div class="palette-heading">
             <span>ACTIVITIES</span>
-            <button class="add-button" id="open-create" aria-label="Create an activity">+</button>
+            <div class="palette-actions">
+              <button class="edit-deck-button" id="toggle-activity-edit" type="button" aria-pressed="false">EDIT BLOCKS</button>
+              <button class="add-button" id="open-create" aria-label="Create an activity">+</button>
+            </div>
           </div>
           <div class="removal-zone" id="removal-zone"><strong>DROP TO REMOVE</strong><span>Removes this scheduled activity</span></div>
           <div class="activity-grid" id="activity-grid"></div>
@@ -96,7 +99,7 @@
         <canvas class="ambient-ocean" id="ocean-canvas" aria-hidden="true"></canvas>
         <div class="workspace-heading">
           <div>
-            <h1>WEEK RHYTHM</h1>
+            <h1>RHYTHM</h1>
           </div>
           <div class="week-metrics">
             <div><small>ACTIVITIES</small><strong id="total-blocks">00</strong></div>

@@ -40,6 +40,7 @@ let currentTheme = "hacker";
 let themeSignalMemory = { hacker: 0, earth: 0, ocean: 0, dream: 0, velvet: 0 };
 let layoutLocked = false;
 let editingTemplateId = null;
+let activityEditMode = false;
 let dayClipboard = null;
 let dayMenuDate = null;
 let historyPast = [];
@@ -487,7 +488,7 @@ function cascadeAfter(key, instanceId) {
 
 function renderPalette() {
   $("#activity-grid").innerHTML = allTemplates().map((item) => `
-    <article class="activity-card" draggable="${!layoutLocked}" tabindex="0" data-template-id="${item.id}" style="--accent:var(--signal-${item.signal})" aria-label="${escapeHtml(item.name)}, ${formatDuration(item.duration)}. Drag into the week or double-click for the next open slot.">
+    <article class="activity-card" draggable="${!layoutLocked && !activityEditMode}" tabindex="0" data-template-id="${item.id}" style="--accent:var(--signal-${item.signal})" aria-label="${escapeHtml(item.name)}, ${formatDuration(item.duration)}. ${activityEditMode ? "Click to edit." : "Drag into the week or double-click for the next open slot."}">
       <span class="activity-name">${escapeHtml(item.name)}</span>
       <span class="activity-time">${formatDuration(item.duration)}</span>
       <button class="activity-edit" type="button" aria-label="Edit ${escapeHtml(item.name)}">EDIT</button>
@@ -496,7 +497,7 @@ function renderPalette() {
 
   $$(".activity-card").forEach((card) => {
     card.addEventListener("dragstart", (event) => {
-      if (layoutLocked || event.target.closest(".activity-edit")) {
+      if (layoutLocked || activityEditMode || event.target.closest(".activity-edit")) {
         event.preventDefault();
         return;
       }
@@ -512,6 +513,7 @@ function renderPalette() {
     });
     card.addEventListener("dblclick", (event) => {
       if (event.target.closest(".activity-edit")) return;
+      if (activityEditMode) return;
       if (layoutLocked) return showToast("LAYOUT LOCKED");
       ensureDay(activeDate);
       const template = findTemplate(card.dataset.templateId);
@@ -523,6 +525,16 @@ function renderPalette() {
       save();
       render();
       showToast(`${template.name.toUpperCase()} // ${formatClock(start)}`);
+    });
+    card.addEventListener("click", (event) => {
+      if (!activityEditMode || event.target.closest(".activity-edit")) return;
+      event.preventDefault();
+      openModal(card.dataset.templateId);
+    });
+    card.addEventListener("keydown", (event) => {
+      if (!activityEditMode || !["Enter", " "].includes(event.key)) return;
+      event.preventDefault();
+      openModal(card.dataset.templateId);
     });
     card.querySelector(".activity-edit").addEventListener("click", (event) => {
       event.preventDefault();
@@ -1452,6 +1464,15 @@ function closeModal() {
 
 function setupModal() {
   $("#color-options").innerHTML = Array.from({ length: 8 }, (_, index) => `<label class="color-choice"><input type="radio" name="activity-color" value="${index}" ${index === 0 ? "checked" : ""}><span style="--choice:var(--signal-${index})"></span></label>`).join("");
+  $("#toggle-activity-edit").addEventListener("click", () => {
+    activityEditMode = !activityEditMode;
+    const button = $("#toggle-activity-edit");
+    button.textContent = activityEditMode ? "DONE" : "EDIT BLOCKS";
+    button.setAttribute("aria-pressed", String(activityEditMode));
+    document.body.classList.toggle("activity-edit-mode", activityEditMode);
+    renderPalette();
+    showToast(activityEditMode ? "SELECT A BLOCK TO EDIT" : "BLOCK EDITING DONE");
+  });
   $("#open-create").addEventListener("click", () => openModal());
   $("#close-create").addEventListener("click", closeModal);
   $("#activity-modal").addEventListener("click", (event) => { if (event.target === $("#activity-modal")) closeModal(); });

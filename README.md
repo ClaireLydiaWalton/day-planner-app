@@ -1,6 +1,6 @@
-# Week Rhythm Desktop
+# Rhythm Desktop
 
-The standalone Windows edition of Week Rhythm: a tactile, highly visual weekly planner for composing the shape of a day without turning it into a corporate calendar.
+The standalone Windows edition of Rhythm: a tactile, highly visual weekly planner for composing the shape of a day without turning it into a corporate calendar.
 
 ## Foundation
 
@@ -10,13 +10,13 @@ The standalone Windows edition of Week Rhythm: a tactile, highly visual weekly p
 - SQLite persistence in the desktop app
 - Browser local-storage fallback during frontend development
 
-The desktop window disables Tauri's native file-drop interception so Week Rhythm's HTML drag-and-drop interactions continue to work on Windows.
+The desktop window disables Tauri's native file-drop interception so Rhythm's HTML drag-and-drop interactions continue to work on Windows.
 
 ## Install on Windows
 
-Builds are written under `src-tauri/target/release/bundle`. For a normal personal installation, open the `nsis/Week Rhythm_0.1.0_x64-setup.exe` package and follow the prompts. The MSI package in the neighboring `msi` folder is available for Windows Installer-based deployment.
+Builds are written under `src-tauri/target/release/bundle`. For a normal personal installation, open the `nsis/Rhythm_0.1.0_x64-setup.exe` package and follow the prompts. The MSI package in the neighboring `msi` folder is available for Windows Installer-based deployment.
 
-After installation, search for **Week Rhythm** from the Start menu. To keep it on the taskbar, right-click the running lotus icon and choose **Pin to taskbar**.
+After installation, search for **Rhythm** from the Start menu. To keep it on the taskbar, right-click the running lotus icon and choose **Pin to taskbar**.
 
 ## Development
 

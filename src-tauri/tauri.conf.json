@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "Week Rhythm",
+  "productName": "Rhythm",
   "version": "0.1.0",
   "identifier": "com.claire.weekrhythm",
   "build": {
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "Week Rhythm",
+        "title": "Rhythm",
         "width": 1480,
         "height": 980,
         "minWidth": 1080,

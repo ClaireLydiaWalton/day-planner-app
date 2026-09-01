@@ -51,7 +51,7 @@ async function waitForSavedState(page, predicate, label) {
 const browser = await chromium.connectOverCDP(CDP_ENDPOINT);
 const pages = browser.contexts().flatMap((context) => context.pages());
 const page = pages.find((candidate) => candidate.url().includes("localhost:1420")) || pages[0];
-assert(page, "The Week Rhythm WebView2 page was not found.");
+assert(page, "The Rhythm WebView2 page was not found.");
 
 await page.waitForSelector(".activity-card");
 await page.waitForSelector(".day-track");
@@ -68,6 +68,33 @@ if (MODE === "inspect") {
     blocks: scheduledCount(state),
     activeDate: state?.activeDate,
     activities: state?.palette?.map((activity) => activity.name),
+  }, null, 2));
+  await browser.close();
+} else if (MODE === "edit-blocks") {
+  const toggle = page.locator("#toggle-activity-edit");
+  await toggle.click();
+  if (await toggle.getAttribute("aria-pressed") !== "true") {
+    const diagnostic = await toggle.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      const hit = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2);
+      return { button: element.outerHTML, hit: hit?.outerHTML, bodyClass: document.body.className };
+    });
+    console.error(JSON.stringify({ editModeDiagnostic: diagnostic }, null, 2));
+  }
+  assert(await toggle.getAttribute("aria-pressed") === "true", "Edit Blocks did not enter edit mode.");
+  assert(await page.locator(".activity-card[draggable=\"false\"]").count() === await page.locator(".activity-card").count(), "Activity dragging stayed enabled in edit mode.");
+  await page.locator('.activity-card[data-template-id="free"]').click();
+  assert(await page.locator("#activity-modal").isVisible(), "Clicking a default block did not open its editor.");
+  assert(await page.locator("#activity-name").inputValue() === "Bathe", "The Bathe default did not load into the editor.");
+  await page.locator("#close-create").click();
+  await toggle.click();
+  assert(await toggle.getAttribute("aria-pressed") === "false", "Edit Blocks did not leave edit mode.");
+  assert(await page.locator(".activity-card[draggable=\"true\"]").count() === await page.locator(".activity-card").count(), "Activity dragging was not restored after editing.");
+  console.log(JSON.stringify({
+    editModeEntered: true,
+    defaultEditorOpened: true,
+    batheLoaded: true,
+    dragRestoredAfterDone: true,
   }, null, 2));
   await browser.close();
 } else if (MODE === "clear-week") {
